@@ -61,20 +61,25 @@ GlobalProcess is a dynamic business process management application designed to a
 1. **Clone the repository**:
    ```
    git clone https://github.com/betsenbaby/GlobalProcess.git
-2. Navigate to the project directory:
+2. **Navigate to the project directory**:
+   ```
    cd GlobalProcess/GlobalProcess-master
 
-3. Install dependencies: 
+3. **Install dependencies**:
+   ```
    dotnet restore
 
-4.Configure the database connection:
-  Update the connection string in appsettings.json to point to your database.
+4. **Configure the database connection**:
+   ```
+   Update the connection string in appsettings.json to point to your database
 
-5.Apply migrations to set up the database:
-  dotnet ef database update
+5. **Apply migrations to set up the database**:
+   ```
+   dotnet ef database update
 
-6.Run the application:
-  dotnet run
+6. **Run the application**:
+   ```
+   dotnet run
 
 ### Areas of Focus
 
