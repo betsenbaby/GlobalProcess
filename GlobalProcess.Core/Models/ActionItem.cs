@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace GlobalProcess.Core.Models
 {
-    public class ActionItem
+    public class ActionItem : BaseEntity
     {
         public int Id { get; set; }
         public string Description { get; set; }
@@ -20,9 +20,7 @@ namespace GlobalProcess.Core.Models
         public ActionItem ParentActionItem { get; set; }
         public int Priority { get; set; }
         public DateTime Deadline { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public string CreatedByUserId { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<ActionItem> SubActionItems { get; set; }
     }
 
     public enum ActionStatus

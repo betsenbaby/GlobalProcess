@@ -8,11 +8,12 @@ namespace GlobalProcess.Core.Models
 {
     public class BusinessProcessInstance : BaseEntity
     {
-        public int BusinessProcessId { get; set; }
-        public BusinessProcess BusinessProcess { get; set; }
+        public int WorkflowId { get; set; }
+        public Workflow Workflow { get; set; }
         public int CurrentStepId { get; set; }
         public Step CurrentStep { get; set; }
         public ICollection<FieldValue> FieldValues { get; set; }
     }
+
 
 }

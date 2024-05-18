@@ -1,5 +1,7 @@
 ﻿using GlobalProcess.Core.Interfaces;
 using GlobalProcess.Core.Models;
+using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,79 +22,199 @@ namespace GlobalProcess.Application.Services
 
         public async Task<IEnumerable<Workflow>> GetAllWorkflowsAsync()
         {
-            return await _workflowRepository.GetAllAsync();
+            try
+            {
+                return await _workflowRepository.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error retrieving all workflows.");
+                throw;
+            }
         }
 
         public async Task<Workflow> GetWorkflowByIdAsync(int id)
         {
-            return await _workflowRepository.GetByIdAsync(id);
+            try
+            {
+                return await _workflowRepository.GetByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving workflow with ID {id}.");
+                throw;
+            }
         }
 
         public async Task AddWorkflowAsync(Workflow workflow)
         {
-            await _workflowRepository.AddAsync(workflow);
+            try
+            {
+                await _workflowRepository.AddAsync(workflow);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error adding workflow.");
+                throw;
+            }
         }
 
         public async Task UpdateWorkflowAsync(Workflow workflow)
         {
-            await _workflowRepository.UpdateAsync(workflow);
+            try
+            {
+                await _workflowRepository.UpdateAsync(workflow);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error updating workflow with ID {workflow.Id}.");
+                throw;
+            }
         }
 
         public async Task DeleteWorkflowAsync(int id)
         {
-            await _workflowRepository.DeleteAsync(id);
+            try
+            {
+                await _workflowRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error deleting workflow with ID {id}.");
+                throw;
+            }
         }
 
         // Step methods
         public async Task<IEnumerable<Step>> GetStepsByWorkflowIdAsync(int workflowId)
         {
-            return await _stepRepository.FindAsync(s => s.WorkflowId == workflowId);
+            try
+            {
+                return await _stepRepository.FindAsync(s => s.WorkflowId == workflowId);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving steps for workflow ID {workflowId}.");
+                throw;
+            }
         }
 
         public async Task<Step> GetStepByIdAsync(int id)
         {
-            return await _stepRepository.GetByIdAsync(id);
+            try
+            {
+                return await _stepRepository.GetByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving step with ID {id}.");
+                throw;
+            }
         }
 
         public async Task AddStepAsync(Step step)
         {
-            await _stepRepository.AddAsync(step);
+            try
+            {
+                await _stepRepository.AddAsync(step);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error adding step.");
+                throw;
+            }
         }
 
         public async Task UpdateStepAsync(Step step)
         {
-            await _stepRepository.UpdateAsync(step);
+            try
+            {
+                await _stepRepository.UpdateAsync(step);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error updating step with ID {step.Id}.");
+                throw;
+            }
         }
 
         public async Task DeleteStepAsync(int id)
         {
-            await _stepRepository.DeleteAsync(id);
+            try
+            {
+                await _stepRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error deleting step with ID {id}.");
+                throw;
+            }
         }
 
         // ActionItem methods
         public async Task<IEnumerable<ActionItem>> GetActionItemsByStepIdAsync(int stepId)
         {
-            return await _actionItemRepository.FindAsync(ai => ai.StepId == stepId);
+            try
+            {
+                return await _actionItemRepository.FindAsync(ai => ai.StepId == stepId);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving action items for step ID {stepId}.");
+                throw;
+            }
         }
 
         public async Task<ActionItem> GetActionItemByIdAsync(int id)
         {
-            return await _actionItemRepository.GetByIdAsync(id);
+            try
+            {
+                return await _actionItemRepository.GetByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving action item with ID {id}.");
+                throw;
+            }
         }
 
         public async Task AddActionItemAsync(ActionItem actionItem)
         {
-            await _actionItemRepository.AddAsync(actionItem);
+            try
+            {
+                await _actionItemRepository.AddAsync(actionItem);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error adding action item.");
+                throw;
+            }
         }
 
         public async Task UpdateActionItemAsync(ActionItem actionItem)
         {
-            await _actionItemRepository.UpdateAsync(actionItem);
+            try
+            {
+                await _actionItemRepository.UpdateAsync(actionItem);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error updating action item with ID {actionItem.Id}.");
+                throw;
+            }
         }
 
         public async Task DeleteActionItemAsync(int id)
         {
-            await _actionItemRepository.DeleteAsync(id);
+            try
+            {
+                await _actionItemRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error deleting action item with ID {id}.");
+                throw;
+            }
         }
     }
 }

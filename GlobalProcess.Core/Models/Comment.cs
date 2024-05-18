@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace GlobalProcess.Core.Models
 {
-    public class Comment
+    public class Comment : BaseEntity
     {
-        public int Id { get; set; }
-        public string Content { get; set; }
-        public string CreatedByUserId { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public int? WorkflowId { get; set; }
-        public Workflow Workflow { get; set; }
+        public string Text { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
+        public DateTime DateCreated { get; set; }
+        public int? BusinessProcessInstanceId { get; set; }
+        public BusinessProcessInstance BusinessProcessInstance { get; set; }
         public int? StepId { get; set; }
         public Step Step { get; set; }
         public int? ActionItemId { get; set; }
         public ActionItem ActionItem { get; set; }
     }
+
 }
