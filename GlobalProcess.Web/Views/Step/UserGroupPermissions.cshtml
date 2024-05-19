@@ -1,0 +1,28 @@
+﻿@model IEnumerable<GlobalProcess.Core.Models.UserGroupPermission>
+
+<h1>User Group Permissions</h1>
+<a href="@Url.Action("AddUserGroupPermission", "Step", new { stepId = ViewBag.StepId })">Add User Group Permission</a>
+<table>
+    <thead>
+        <tr>
+            <th>User Group</th>
+            <th>Can View</th>
+            <th>Can Edit</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserGroup.Name</td>
+                <td>@item.CanView ? "Yes" : "No"</td>
+                <td>@item.CanEdit ? "Yes" : "No"</td>
+                <td>
+                    <a href="@Url.Action("EditUserGroupPermission", "Step", new { id = item.Id })">Edit</a> |
+                    <a href="@Url.Action("DeleteUserGroupPermission", "Step", new { id = item.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

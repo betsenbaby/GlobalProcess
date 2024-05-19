@@ -1,0 +1,28 @@
+﻿@model GlobalProcess.Core.Models.Workflow
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="@(ViewData["Action"] as string)">
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Description"></label>
+        <input asp-for="Description" />
+        <span asp-validation-for="Description"></span>
+    </div>
+    <div>
+        <label asp-for="BusinessProcessId"></label>
+        <select asp-for="BusinessProcessId" asp-items="ViewBag.BusinessProcesses"></select>
+        <span asp-validation-for="BusinessProcessId"></span>
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

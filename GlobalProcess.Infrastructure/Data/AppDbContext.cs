@@ -21,6 +21,7 @@ namespace GlobalProcess.Infrastructure.Data
         public DbSet<FieldValue> FieldValues { get; set; }
         public DbSet<FieldPermissions> FieldPermissions { get; set; }
         public DbSet<UserGroupPermission> UserGroupPermissions { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; } 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

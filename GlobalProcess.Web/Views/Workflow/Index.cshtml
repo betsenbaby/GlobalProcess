@@ -1,0 +1,27 @@
+﻿@model IEnumerable<GlobalProcess.Core.Models.Workflow>
+
+<h1>Workflows</h1>
+<a href="@Url.Action("Create", "Workflow")">Create New Workflow</a>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Workflow", new { id = item.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", "Workflow", new { id = item.Id })">Delete</a> |
+                    <a href="@Url.Action("Index", "Step", new { workflowId = item.Id })">Manage Steps</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<GlobalProcess.Core.Models.FieldPermissions>
+
+<h1>Field Permissions</h1>
+<a href="@Url.Action("AddFieldPermission", "Step", new { stepId = ViewBag.StepId })">Add Field Permission</a>
+<table>
+    <thead>
+        <tr>
+            <th>Field</th>
+            <th>Visibility</th>
+            <th>Editability</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Field.Name</td>
+                <td>@item.IsVisible ? "Visible" : "Hidden"</td>
+                <td>@item.IsEditable ? "Editable" : "Read-Only"</td>
+                <td>
+                    <a href="@Url.Action("EditFieldPermission", "Step", new { id = item.Id })">Edit</a> |
+                    <a href="@Url.Action("DeleteFieldPermission", "Step", new { id = item.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

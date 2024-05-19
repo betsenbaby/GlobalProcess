@@ -28,6 +28,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+// Add services to the container
+builder.Services.AddScoped<BusinessProcessService>();
+builder.Services.AddScoped<WorkflowService>();
+builder.Services.AddScoped<FormService>();
+builder.Services.AddScoped<StepService>();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -53,6 +59,15 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Seed the database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AppDbContext>();
+    AppDbContextSeed.Seed(context);
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

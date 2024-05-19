@@ -6,61 +6,68 @@ GlobalProcess is a dynamic business process management application designed to a
 ## Project Structure
 
 ### GlobalProcess.Application
-- `Services/WorkflowService.cs`: Contains business logic for workflow management.
+- **Purpose**: Contains business logic and application services.
+- **Key Components**:
+  - `Services/WorkflowService.cs`: Manages workflow-related business logic.
 
 ### GlobalProcess.Core
-- `Interfaces/IRepository.cs`: Defines the repository interface.
-- `Models/`: Contains entity and data models such as:
-  - `ActionItem.cs`
-  - `ApplicationUser.cs`
-  - `BaseEntity.cs`
-  - `BusinessProcess.cs`
-  - `BusinessProcessInstance.cs`
-  - `Comment.cs`
-  - `DynamicField.cs`
-  - `DynamicForm.cs`
-  - `EmailTemplate.cs`
-  - `FieldPermissions.cs`
-  - `FieldValue.cs`
-  - `Step.cs`
-  - `UserGroupPermission.cs`
-  - `Workflow.cs`
+- **Purpose**: Contains core domain models and interfaces, representing the business logic without dependencies on other layers.
+- **Key Components**:
+  - `Interfaces/IRepository.cs`: Defines the repository interface.
+  - `Models/`: Contains entity and data models such as:
+    - `ActionItem.cs`
+    - `ApplicationUser.cs`
+    - `BaseEntity.cs`
+    - `BusinessProcess.cs`
+    - `BusinessProcessInstance.cs`
+    - `Comment.cs`
+    - `DynamicField.cs`
+    - `DynamicForm.cs`
+    - `EmailTemplate.cs`
+    - `FieldPermissions.cs`
+    - `FieldValue.cs`
+    - `Step.cs`
+    - `UserGroupPermission.cs`
+    - `Workflow.cs`
 
 ### GlobalProcess.Infrastructure
-- `Data/AppDbContext.cs`: Defines the application's data context.
-- `Repositories/Repository.cs`: Implements the repository pattern for data access.
+- **Purpose**: Manages data access, repositories, and external services.
+- **Key Components**:
+  - `Data/AppDbContext.cs`: Defines the application's data context.
+  - `Repositories/Repository.cs`: Implements the repository pattern for data access.
 
 ### GlobalProcess.Web
-- `Controllers/`: Handles HTTP requests for various parts of the application.
-  - `AccountController.cs`: Manages user accounts and authentication.
-  - `AdminController.cs`: Provides endpoints for admin operations.
-  - `HomeController.cs`: Handles basic navigation and home page requests.
-  - `WorkflowController.cs`: Manages workflows and related actions.
-- `Models/`: Contains view models for the web application.
-- `Program.cs`: The entry point of the application.
-- `Properties/`: Contains project properties such as assembly info.
-- `Views/`: Contains Razor views for rendering UI components.
-- `appsettings.json` and `appsettings.Development.json`: Configuration settings for the application.
-- `wwwroot/`: Static files for the web application.
+- **Purpose**: Contains the web UI and API controllers, handling user interactions and HTTP requests.
+- **Key Components**:
+  - `Controllers/`: Handles HTTP requests for various parts of the application.
+    - `AccountController.cs`: Manages user accounts and authentication.
+    - `AdminController.cs`: Provides endpoints for admin operations.
+    - `HomeController.cs`: Handles basic navigation and home page requests.
+    - `WorkflowController.cs`: Manages workflows and related actions.
+  - `Models/`: Contains view models for the web application.
+  - `Program.cs`: The entry point of the application.
+  - `Properties/`: Contains project properties such as assembly info.
+  - `Views/`: Contains Razor views for rendering UI components.
+  - `appsettings.json` and `appsettings.Development.json`: Configuration settings for the application.
+  - `wwwroot/`: Static files for the web application.
 
 ## Dependencies
-
-- **ASP.NET Core 8**
-- **Entity Framework Core**
-- **Other necessary packages** (specify if there are additional packages)
+- ASP.NET Core 8
+- Entity Framework Core
+- Other necessary packages (specify if there are additional packages)
 
 ## Setup Instructions
 
 ### Prerequisites
-
 - [.NET SDK](https://dotnet.microsoft.com/download) installed on your machine.
 - A SQL Server instance for the database (or another supported database).
 
 ### Steps
 
 1. **Clone the repository**:
-   ```
+   ```sh
    git clone https://github.com/betsenbaby/GlobalProcess.git
+
 2. **Navigate to the project directory**:
    ```
    cd GlobalProcess/GlobalProcess-master

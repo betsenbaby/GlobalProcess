@@ -1,0 +1,28 @@
+﻿@model IEnumerable<GlobalProcess.Core.Models.Step>
+
+<h1>Steps</h1>
+<a href="@Url.Action("Create", "Step", new { workflowId = ViewBag.WorkflowId })">Create New Step</a>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Step", new { id = item.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", "Step", new { id = item.Id })">Delete</a> |
+                    <a href="@Url.Action("FieldPermissions", "Step", new { stepId = item.Id })">Field Permissions</a> |
+                    <a href="@Url.Action("UserGroupPermissions", "Step", new { stepId = item.Id })">User Group Permissions</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

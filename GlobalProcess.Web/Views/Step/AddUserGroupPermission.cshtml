@@ -1,0 +1,29 @@
+﻿@model GlobalProcess.Core.Models.UserGroupPermission
+
+<h1>Add User Group Permission</h1>
+
+<form asp-action="AddUserGroupPermission">
+    <div>
+        <label asp-for="UserGroupId"></label>
+        <select asp-for="UserGroupId" asp-items="ViewBag.UserGroups"></select>
+        <span asp-validation-for="UserGroupId"></span>
+    </div>
+    <div>
+        <label asp-for="CanView"></label>
+        <input asp-for="CanView" type="checkbox" />
+        <span asp-validation-for="CanView"></span>
+    </div>
+    <div>
+        <label asp-for="CanEdit"></label>
+        <input asp-for="CanEdit" type="checkbox" />
+        <span asp-validation-for="CanEdit"></span>
+    </div>
+    <input type="hidden" asp-for="StepId" value="@ViewBag.StepId" />
+    <button type="submit">Save</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

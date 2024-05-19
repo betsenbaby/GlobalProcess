@@ -13,6 +13,8 @@ namespace GlobalProcess.Core.Models
         public string FieldType { get; set; } // e.g., Text, Date, Dropdown
         public string Options { get; set; } // JSON string for dropdown options
         public bool IsRequired { get; set; }
+        public int FormId { get; set; } // Add this property
+        public DynamicForm Form { get; set; } // Navigation property
     }
 
 }

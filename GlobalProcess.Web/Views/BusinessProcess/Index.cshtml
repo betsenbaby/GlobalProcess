@@ -1,0 +1,26 @@
+﻿@model IEnumerable<GlobalProcess.Core.Models.BusinessProcess>
+
+<h1>Business Processes</h1>
+<a href="@Url.Action("Create", "BusinessProcess")">Create New Business Process</a>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>
+                    <a href="@Url.Action("Edit", "BusinessProcess", new { id = item.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", "BusinessProcess", new { id = item.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
