@@ -10,10 +10,12 @@ namespace GlobalProcess.Application.Services
     public class FormService
     {
         private readonly IRepository<DynamicForm> _formRepository;
+        private readonly IRepository<DynamicField> _fieldRepository;
 
-        public FormService(IRepository<DynamicForm> formRepository)
+        public FormService(IRepository<DynamicForm> formRepository, IRepository<DynamicField> fieldRepository)
         {
             _formRepository = formRepository;
+            _fieldRepository = fieldRepository;
         }
 
         public async Task<IEnumerable<DynamicForm>> GetAllFormsAsync()
@@ -100,5 +102,47 @@ namespace GlobalProcess.Application.Services
             }
         }
 
+        public async Task<DynamicField> GetFieldByIdAsync(int fieldId)
+        {
+            try
+            {
+                return await _fieldRepository.GetByIdAsync(fieldId);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving field with ID {fieldId}.");
+                throw;
+            }
+        }
+
+        public async Task UpdateFieldAsync(DynamicField field)
+        {
+            try
+            {
+                await _fieldRepository.UpdateAsync(field);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error updating field with ID {field.Id}.");
+                throw;
+            }
+        }
+
+        public async Task DeleteFieldAsync(int fieldId)
+        {
+            try
+            {
+                var field = await _fieldRepository.GetByIdAsync(fieldId);
+                if (field != null)
+                {
+                    await _fieldRepository.DeleteAsync(fieldId);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error deleting field with ID {fieldId}.");
+                throw;
+            }
+        }
     }
 }

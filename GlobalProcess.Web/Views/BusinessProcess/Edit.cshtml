@@ -1,8 +1,8 @@
-﻿@model GlobalProcess.Core.Models.Workflow
+﻿@model GlobalProcess.Core.Models.BusinessProcess
 
-<h1>Create Workflow</h1>
+<h1>Edit Business Process</h1>
 
-<form asp-action="Create">
+<form asp-action="Edit">
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" />
@@ -12,11 +12,6 @@
         <label asp-for="Description"></label>
         <input asp-for="Description" />
         <span asp-validation-for="Description"></span>
-    </div>
-    <div>
-        <label asp-for="BusinessProcessId"></label>
-        <select asp-for="BusinessProcessId" asp-items="ViewBag.BusinessProcesses"></select>
-        <span asp-validation-for="BusinessProcessId"></span>
     </div>
     <button type="submit">Save</button>
 </form>

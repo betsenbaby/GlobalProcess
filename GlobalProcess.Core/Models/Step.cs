@@ -17,6 +17,4 @@ namespace GlobalProcess.Core.Models
         public ICollection<FieldPermissions> FieldPermissions { get; set; }
         public ICollection<UserGroupPermission> Permissions { get; set; }
     }
-
-
 }

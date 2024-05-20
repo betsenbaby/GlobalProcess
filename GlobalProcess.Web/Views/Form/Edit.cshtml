@@ -1,8 +1,9 @@
 ﻿@model GlobalProcess.Core.Models.DynamicForm
 
-<h1>Create Form</h1>
+<h1>Edit Form</h1>
 
-<form asp-action="Create">
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" />

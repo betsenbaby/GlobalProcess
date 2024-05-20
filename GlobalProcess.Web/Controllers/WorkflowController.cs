@@ -1,6 +1,9 @@
 ﻿using GlobalProcess.Application.Services;
 using GlobalProcess.Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Serilog;
+using System;
 using System.Threading.Tasks;
 
 namespace GlobalProcess.Web.Controllers
@@ -16,12 +19,21 @@ namespace GlobalProcess.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var workflows = await _workflowService.GetAllWorkflowsAsync();
-            return View(workflows);
+            try
+            {
+                var workflows = await _workflowService.GetAllWorkflowsAsync();
+                return View(workflows);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error retrieving workflows.");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.BusinessProcesses = new SelectList(await _workflowService.GetAllBusinessProcessesAsync(), "Id", "Name");
             return View();
         }
 
@@ -30,20 +42,38 @@ namespace GlobalProcess.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _workflowService.AddWorkflowAsync(workflow);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _workflowService.AddWorkflowAsync(workflow);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Error creating workflow.");
+                    return StatusCode(500, "Internal server error");
+                }
             }
+            ViewBag.BusinessProcesses = new SelectList(await _workflowService.GetAllBusinessProcessesAsync(), "Id", "Name");
             return View(workflow);
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            var workflow = await _workflowService.GetWorkflowByIdAsync(id);
-            if (workflow == null)
+            try
             {
-                return NotFound();
+                var workflow = await _workflowService.GetWorkflowByIdAsync(id);
+                if (workflow == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.BusinessProcesses = new SelectList(await _workflowService.GetAllBusinessProcessesAsync(), "Id", "Name", workflow.BusinessProcessId);
+                return View(workflow);
             }
-            return View(workflow);
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving workflow with ID {id}.");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
@@ -51,27 +81,52 @@ namespace GlobalProcess.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _workflowService.UpdateWorkflowAsync(workflow);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _workflowService.UpdateWorkflowAsync(workflow);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, $"Error updating workflow with ID {workflow.Id}.");
+                    return StatusCode(500, "Internal server error");
+                }
             }
+            ViewBag.BusinessProcesses = new SelectList(await _workflowService.GetAllBusinessProcessesAsync(), "Id", "Name", workflow.BusinessProcessId);
             return View(workflow);
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var workflow = await _workflowService.GetWorkflowByIdAsync(id);
-            if (workflow == null)
+            try
             {
-                return NotFound();
+                var workflow = await _workflowService.GetWorkflowByIdAsync(id);
+                if (workflow == null)
+                {
+                    return NotFound();
+                }
+                return View(workflow);
             }
-            return View(workflow);
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving workflow with ID {id}.");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _workflowService.DeleteWorkflowAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _workflowService.DeleteWorkflowAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error deleting workflow with ID {id}.");
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

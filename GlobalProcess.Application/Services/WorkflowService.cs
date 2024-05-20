@@ -12,12 +12,18 @@ namespace GlobalProcess.Application.Services
         private readonly IRepository<Workflow> _workflowRepository;
         private readonly IRepository<Step> _stepRepository;
         private readonly IRepository<ActionItem> _actionItemRepository;
+        private readonly IRepository<BusinessProcess> _businessProcessRepository;
 
-        public WorkflowService(IRepository<Workflow> workflowRepository, IRepository<Step> stepRepository, IRepository<ActionItem> actionItemRepository)
+        public WorkflowService(
+            IRepository<Workflow> workflowRepository,
+            IRepository<Step> stepRepository,
+            IRepository<ActionItem> actionItemRepository,
+            IRepository<BusinessProcess> businessProcessRepository)
         {
             _workflowRepository = workflowRepository;
             _stepRepository = stepRepository;
             _actionItemRepository = actionItemRepository;
+            _businessProcessRepository = businessProcessRepository;
         }
 
         public async Task<IEnumerable<Workflow>> GetAllWorkflowsAsync()
@@ -85,7 +91,6 @@ namespace GlobalProcess.Application.Services
             }
         }
 
-        // Step methods
         public async Task<IEnumerable<Step>> GetStepsByWorkflowIdAsync(int workflowId)
         {
             try
@@ -151,7 +156,6 @@ namespace GlobalProcess.Application.Services
             }
         }
 
-        // ActionItem methods
         public async Task<IEnumerable<ActionItem>> GetActionItemsByStepIdAsync(int stepId)
         {
             try
@@ -213,6 +217,19 @@ namespace GlobalProcess.Application.Services
             catch (Exception ex)
             {
                 Log.Error(ex, $"Error deleting action item with ID {id}.");
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<BusinessProcess>> GetAllBusinessProcessesAsync()
+        {
+            try
+            {
+                return await _businessProcessRepository.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error retrieving all business processes.");
                 throw;
             }
         }

@@ -1,0 +1,30 @@
+﻿@model GlobalProcess.Core.Models.FieldPermissions
+
+<h1>Edit Field Permission</h1>
+
+<form asp-action="EditFieldPermission">
+    <div>
+        <label asp-for="FieldId"></label>
+        <select asp-for="FieldId" asp-items="ViewBag.Fields"></select>
+        <span asp-validation-for="FieldId"></span>
+    </div>
+    <div>
+        <label asp-for="IsVisible"></label>
+        <input asp-for="IsVisible" type="checkbox" />
+        <span asp-validation-for="IsVisible"></span>
+    </div>
+    <div>
+        <label asp-for="IsEditable"></label>
+        <input asp-for="IsEditable" type="checkbox" />
+        <span asp-validation-for="IsEditable"></span>
+    </div>
+    <input type="hidden" asp-for="StepId" value="@ViewBag.StepId" />
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Save</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

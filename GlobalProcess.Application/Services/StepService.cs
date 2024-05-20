@@ -101,6 +101,19 @@ namespace GlobalProcess.Application.Services
             }
         }
 
+        public async Task<FieldPermissions> GetFieldPermissionByIdAsync(int id)
+        {
+            try
+            {
+                return await _fieldPermissionsRepository.GetByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving field permission with ID {id}.");
+                throw;
+            }
+        }
+
         public async Task AddFieldPermissionAsync(FieldPermissions permission)
         {
             try
@@ -110,6 +123,32 @@ namespace GlobalProcess.Application.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Error adding field permission.");
+                throw;
+            }
+        }
+
+        public async Task UpdateFieldPermissionAsync(FieldPermissions permission)
+        {
+            try
+            {
+                await _fieldPermissionsRepository.UpdateAsync(permission);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error updating field permission with ID {permission.Id}.");
+                throw;
+            }
+        }
+
+        public async Task DeleteFieldPermissionAsync(int id)
+        {
+            try
+            {
+                await _fieldPermissionsRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error deleting field permission with ID {id}.");
                 throw;
             }
         }
@@ -127,6 +166,19 @@ namespace GlobalProcess.Application.Services
             }
         }
 
+        public async Task<UserGroupPermission> GetUserGroupPermissionByIdAsync(int id)
+        {
+            try
+            {
+                return await _userGroupPermissionRepository.GetByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving user group permission with ID {id}.");
+                throw;
+            }
+        }
+
         public async Task AddUserGroupPermissionAsync(UserGroupPermission permission)
         {
             try
@@ -136,6 +188,32 @@ namespace GlobalProcess.Application.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Error adding user group permission.");
+                throw;
+            }
+        }
+
+        public async Task UpdateUserGroupPermissionAsync(UserGroupPermission permission)
+        {
+            try
+            {
+                await _userGroupPermissionRepository.UpdateAsync(permission);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error updating user group permission with ID {permission.Id}.");
+                throw;
+            }
+        }
+
+        public async Task DeleteUserGroupPermissionAsync(int id)
+        {
+            try
+            {
+                await _userGroupPermissionRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error deleting user group permission with ID {id}.");
                 throw;
             }
         }

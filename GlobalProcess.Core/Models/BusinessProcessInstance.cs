@@ -14,6 +14,4 @@ namespace GlobalProcess.Core.Models
         public Step CurrentStep { get; set; }
         public ICollection<FieldValue> FieldValues { get; set; }
     }
-
-
 }

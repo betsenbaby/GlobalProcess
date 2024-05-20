@@ -13,13 +13,9 @@ namespace GlobalProcess.Core.Models
         public int StepId { get; set; }
         public Step Step { get; set; }
         public string Action { get; set; } // e.g., View, Edit, Approve
-
-        // New properties
         public bool CanView { get; set; }
         public bool CanEdit { get; set; }
         public string UserGroupId { get; set; }
         public UserGroup UserGroup { get; set; }
     }
-
-
 }

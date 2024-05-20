@@ -15,5 +15,4 @@ namespace GlobalProcess.Core.Models
         public bool IsVisible { get; set; }
         public bool IsEditable { get; set; }
     }
-
 }

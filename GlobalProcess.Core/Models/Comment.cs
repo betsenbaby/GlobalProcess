@@ -19,5 +19,4 @@ namespace GlobalProcess.Core.Models
         public int? ActionItemId { get; set; }
         public ActionItem ActionItem { get; set; }
     }
-
 }

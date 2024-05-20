@@ -1,8 +1,9 @@
 ﻿@model GlobalProcess.Core.Models.Workflow
 
-<h1>Create Workflow</h1>
+<h1>Edit Workflow</h1>
 
-<form asp-action="Create">
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" />
