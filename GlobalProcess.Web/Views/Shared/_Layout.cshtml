@@ -1,50 +1,157 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewData["Title"] - GlobalProcess</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Additional CSS from the theme -->
+    <link href="~/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="~/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="~/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <link href="~/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="~/css/pace.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-extended.css" rel="stylesheet">
+    <link href="~/css/app.css" rel="stylesheet">
+    <link href="~/css/icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/dark-theme.css" />
+    <link rel="stylesheet" href="~/css/semi-dark.css" />
+    <link rel="stylesheet" href="~/css/header-colors.css" />
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GlobalProcess</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-                            </li>
-                        }
-                    </ul>
+    <div class="wrapper">
+        <!-- Sidebar wrapper -->
+        <div class="sidebar-wrapper" data-simplebar="true">
+            <div class="sidebar-header">
+                <div>
+                    <img src="~/images/logo-icon.png" class="logo-icon" alt="logo icon">
+                </div>
+                <div>
+                    <h4 class="logo-text">GlobalProcess</h4>
+                </div>
+                <div class="toggle-icon ms-auto">
+                    <i class='bx bx-arrow-to-left'></i>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container body-content">
-        @RenderBody()
-    </div>
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; @DateTime.Now.Year - GlobalProcess</p>
+            <!-- Navigation -->
+            <ul class="metismenu" id="menu">
+                <li>
+                    <a href="~/">
+                        <div class="parent-icon"><i class='bx bx-home-circle'></i></div>
+                        <div class="menu-title">Home</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/BusinessProcess">
+                        <div class="parent-icon"><i class='bx bx-building'></i></div>
+                        <div class="menu-title">Business Processes</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Workflow">
+                        <div class="parent-icon"><i class='bx bx-merge'></i></div>
+                        <div class="menu-title">Workflows</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Form">
+                        <div class="parent-icon"><i class='bx bx-list-ul'></i></div>
+                        <div class="menu-title">Forms</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Step">
+                        <div class="parent-icon"><i class='bx bx-step-forward'></i></div>
+                        <div class="menu-title">Steps</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Account/Profile">
+                        <div class="parent-icon"><i class='bx bx-user'></i></div>
+                        <div class="menu-title">Profile</div>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </footer>
+        <!-- End sidebar wrapper -->
+        <!-- Header -->
+        <header>
+            <div class="topbar d-flex align-items-center">
+                <nav class="navbar navbar-expand">
+                    <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
+                    <div class="search-bar flex-grow-1">
+                        <div class="position-relative search-bar-box">
+                            <input type="text" class="form-control search-control" placeholder="Type to search...">
+                            <span class="position-absolute top-50 search-show translate-middle-y"><i class='bx bx-search'></i></span>
+                            <span class="position-absolute top-50 search-close translate-middle-y"><i class='bx bx-x'></i></span>
+                        </div>
+                    </div>
+                    <div class="top-menu ms-auto">
+                        <ul class="navbar-nav align-items-center">
+                            <li class="nav-item dropdown dropdown-large">
+                                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-category'></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="row row-cols-3 g-3 p-3">
+                                        <div class="col text-center">
+                                            <div class="app-box mx-auto bg-gradient-cosmic text-white"><i class='bx bx-group'></i></div>
+                                            <div class="app-title">Teams</div>
+                                        </div>
+                                        <!-- Add more items as needed -->
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Add more header items as needed -->
+                        </ul>
+                    </div>
+                    <div class="user-box dropdown">
+                        <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="~/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
+                            <div class="user-info ps-3">
+                                <p class="user-name mb-0">@User.Identity.Name</p>
+                                <p class="designation mb-0">Role</p>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="~/Account/Profile"><i class="bx bx-user"></i><span>Profile</span></a></li>
+                            <li><a class="dropdown-item" href="~/Account/Logout"><i class='bx bx-log-out-circle'></i><span>Logout</span></a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- End header -->
+        <!-- Page wrapper -->
+        <div class="page-wrapper">
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- End page wrapper -->
+        <!-- Footer -->
+        <footer class="page-footer">
+            <div class="container">
+                <span class="text-muted">Copyright © @DateTime.Now.Year, UNECE</span>
+            </div>
+        </footer>
+        <!-- End footer -->
+    </div>
+
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"></script>
+
+    <!-- Additional JS from the theme -->
+    <script src="~/js/pace.min.js"></script>
+    <script src="~/plugins/simplebar/js/simplebar.min.js"></script>
+    <script src="~/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="~/plugins/metismenu/js/metisMenu.min.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

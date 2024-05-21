@@ -21,7 +21,11 @@ namespace GlobalProcess.Infrastructure.Data
         public DbSet<FieldValue> FieldValues { get; set; }
         public DbSet<FieldPermissions> FieldPermissions { get; set; }
         public DbSet<UserGroupPermission> UserGroupPermissions { get; set; }
-        public DbSet<UserGroup> UserGroups { get; set; } 
+        public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<StepType> StepTypes { get; set; }
+
+
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -29,7 +33,23 @@ namespace GlobalProcess.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Additional configuration here
+
+            modelBuilder.Entity<UserGroupPermission>()
+                 .HasOne(ugp => ugp.UserGroup)
+                 .WithMany(ug => ug.UserGroupPermissions)
+                 .HasForeignKey(ugp => ugp.UserGroupId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<DynamicField>()
+                .HasOne(df => df.Form)
+                .WithMany(f => f.Fields)
+                .HasForeignKey(df => df.FormId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Step>()
+           .Property(s => s.StepType)
+           .HasConversion<string>();
+            // Additional configurations if needed
         }
     }
 }

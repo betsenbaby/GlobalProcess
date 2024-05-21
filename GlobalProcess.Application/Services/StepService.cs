@@ -10,15 +10,18 @@ namespace GlobalProcess.Application.Services
     public class StepService
     {
         private readonly IRepository<Step> _stepRepository;
+        private readonly IRepository<StepType> _stepTypeRepository;
         private readonly IRepository<FieldPermissions> _fieldPermissionsRepository;
         private readonly IRepository<UserGroupPermission> _userGroupPermissionRepository;
 
         public StepService(
             IRepository<Step> stepRepository,
+            IRepository<StepType> stepTypeRepository,
             IRepository<FieldPermissions> fieldPermissionsRepository,
             IRepository<UserGroupPermission> userGroupPermissionRepository)
         {
             _stepRepository = stepRepository;
+            _stepTypeRepository = stepTypeRepository;
             _fieldPermissionsRepository = fieldPermissionsRepository;
             _userGroupPermissionRepository = userGroupPermissionRepository;
         }
@@ -214,6 +217,71 @@ namespace GlobalProcess.Application.Services
             catch (Exception ex)
             {
                 Log.Error(ex, $"Error deleting user group permission with ID {id}.");
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<StepType>> GetAllStepTypesAsync()
+        {
+            try
+            {
+                return await _stepTypeRepository.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error retrieving step types.");
+                throw;
+            }
+        }
+
+        public async Task<StepType> GetStepTypeByIdAsync(int id)
+        {
+            try
+            {
+                return await _stepTypeRepository.GetByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error retrieving step type with ID {id}.");
+                throw;
+            }
+        }
+
+        public async Task AddStepTypeAsync(StepType stepType)
+        {
+            try
+            {
+                await _stepTypeRepository.AddAsync(stepType);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error adding step type.");
+                throw;
+            }
+        }
+
+        public async Task UpdateStepTypeAsync(StepType stepType)
+        {
+            try
+            {
+                await _stepTypeRepository.UpdateAsync(stepType);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error updating step type with ID {stepType.Id}.");
+                throw;
+            }
+        }
+
+        public async Task DeleteStepTypeAsync(int id)
+        {
+            try
+            {
+                await _stepTypeRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error deleting step type with ID {id}.");
                 throw;
             }
         }

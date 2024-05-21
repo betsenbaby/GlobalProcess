@@ -12,7 +12,8 @@ namespace GlobalProcess.Core.Models
         public string Description { get; set; }
         public int BusinessProcessId { get; set; }
         public BusinessProcess BusinessProcess { get; set; }
-        public ICollection<Step> Steps { get; set; }
+        public ICollection<Step> Steps { get; set; } = new List<Step>();
+        public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
     }
 
 }

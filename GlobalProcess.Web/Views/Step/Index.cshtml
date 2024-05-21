@@ -1,28 +1,32 @@
 ﻿@model IEnumerable<GlobalProcess.Core.Models.Step>
 
 <h1>Steps</h1>
-<a href="@Url.Action("Create", "Step", new { workflowId = ViewBag.WorkflowId })">Create New Step</a>
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.Description</td>
-                <td>
-                    <a href="@Url.Action("Edit", "Step", new { id = item.Id })">Edit</a> |
-                    <a href="@Url.Action("Delete", "Step", new { id = item.Id })">Delete</a> |
-                    <a href="@Url.Action("FieldPermissions", "Step", new { stepId = item.Id })">Field Permissions</a> |
-                    <a href="@Url.Action("UserGroupPermissions", "Step", new { stepId = item.Id })">User Group Permissions</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<a href="@Url.Action("Create", "Step", new { workflowId = ViewBag.WorkflowId })" class="btn btn-primary mb-3">Create New Step</a>
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Step", new { id = item.Id })" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="@Url.Action("Delete", "Step", new { id = item.Id })" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="@Url.Action("FieldPermissions", "Step", new { stepId = item.Id })" class="btn btn-info btn-sm">Field Permissions</a>
+                            <a href="@Url.Action("UserGroupPermissions", "Step", new { stepId = item.Id })" class="btn btn-secondary btn-sm">User Group Permissions</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

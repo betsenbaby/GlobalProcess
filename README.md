@@ -8,7 +8,10 @@ GlobalProcess is a dynamic business process management application designed to a
 ### GlobalProcess.Application
 - **Purpose**: Contains business logic and application services.
 - **Key Components**:
-  - `Services/WorkflowService.cs`: Manages workflow-related business logic.
+  - `Services/BusinessProcessService.cs`: Manages business process-related logic.
+  - `Services/WorkflowService.cs`: Manages workflow-related logic.
+  - `Services/FormService.cs`: Manages form-related logic.
+  - `Services/StepService.cs`: Manages step-related logic.
 
 ### GlobalProcess.Core
 - **Purpose**: Contains core domain models and interfaces, representing the business logic without dependencies on other layers.
@@ -43,7 +46,10 @@ GlobalProcess is a dynamic business process management application designed to a
     - `AccountController.cs`: Manages user accounts and authentication.
     - `AdminController.cs`: Provides endpoints for admin operations.
     - `HomeController.cs`: Handles basic navigation and home page requests.
+    - `BusinessProcessController.cs`: Manages business processes.
     - `WorkflowController.cs`: Manages workflows and related actions.
+    - `FormController.cs`: Manages forms and dynamic fields.
+    - `StepController.cs`: Manages steps within workflows.
   - `Models/`: Contains view models for the web application.
   - `Program.cs`: The entry point of the application.
   - `Properties/`: Contains project properties such as assembly info.
@@ -54,7 +60,7 @@ GlobalProcess is a dynamic business process management application designed to a
 ## Dependencies
 - ASP.NET Core 8
 - Entity Framework Core
-- Other necessary packages (specify if there are additional packages)
+- Serilog for logging
 
 ## Setup Instructions
 

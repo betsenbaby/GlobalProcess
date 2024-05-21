@@ -1,20 +1,33 @@
-﻿@model GlobalProcess.Core.Models.Step
+﻿@using GlobalProcess.Application.ViewModels
+@model StepViewModel
 
-<h1>@ViewData["Title"]</h1>
+<h1>Create Step</h1>
 
-<form asp-action="@(ViewData["Action"] as string)">
-    <div>
+<form asp-action="Create">
+    <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    <div>
+    <div class="form-group">
         <label asp-for="Description"></label>
-        <input asp-for="Description" />
-        <span asp-validation-for="Description"></span>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
-    <input type="hidden" asp-for="WorkflowId" value="@ViewBag.WorkflowId" />
-    <button type="submit">Save</button>
+    <div class="form-group">
+        <label asp-for="StepTypeId"></label>
+        <select asp-for="StepTypeId" class="form-control" asp-items="@(new SelectList(ViewBag.StepTypes, "Id", "Name"))">
+            <option value="">Select Step Type</option>
+        </select>
+        <span asp-validation-for="StepTypeId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FormId"></label>
+        <input asp-for="FormId" class="form-control" />
+        <span asp-validation-for="FormId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-secondary" formaction="~/Step/Create?workflowId=@Model.WorkflowId">Save and Add Next Step</button>
 </form>
 
 @section Scripts {

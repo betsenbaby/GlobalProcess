@@ -10,7 +10,8 @@ namespace GlobalProcess.Core.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Workflow> Workflows { get; set; }
+        public ICollection<Workflow>? Workflows { get; set; } = new List<Workflow>();
+        public ICollection<Comment>? Comments { get; set; }= new List<Comment>();
     }
 
 }

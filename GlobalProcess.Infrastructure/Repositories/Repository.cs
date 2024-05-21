@@ -38,11 +38,13 @@ namespace GlobalProcess.Infrastructure.Repositories
         public async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
+            await SaveAsync();
         }
 
         public async Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
+            await SaveAsync();
         }
 
         public async Task DeleteAsync(int id)
@@ -51,6 +53,7 @@ namespace GlobalProcess.Infrastructure.Repositories
             if (entity != null)
             {
                 _dbSet.Remove(entity);
+                await SaveAsync();
             }
         }
 
@@ -58,6 +61,10 @@ namespace GlobalProcess.Infrastructure.Repositories
         {
             return await _dbSet.AnyAsync(predicate);
         }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
-

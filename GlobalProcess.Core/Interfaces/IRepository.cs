@@ -15,5 +15,7 @@ namespace GlobalProcess.Core.Interfaces
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
         Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
+        Task SaveAsync();
+
     }
 }

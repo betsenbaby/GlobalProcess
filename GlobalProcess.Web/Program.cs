@@ -1,7 +1,10 @@
 using GlobalProcess.Application.Services;
 using GlobalProcess.Core.Interfaces;
+using GlobalProcess.Core.Models;
+using GlobalProcess.Core.ViewModels;
 using GlobalProcess.Infrastructure.Data;
 using GlobalProcess.Infrastructure.Repositories;
+using Mapster;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +20,7 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
     .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7) // Configure file sink with rolling logs
     .CreateLogger();
 
 builder.Host.UseSerilog();
@@ -55,8 +59,14 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Add services to the container.
+
+
+// Add controllers with views
 builder.Services.AddControllersWithViews();
+
+// Add Mapster
+builder.Services.AddMapster();
+MappingConfiguration.RegisterMappings();
 
 var app = builder.Build();
 

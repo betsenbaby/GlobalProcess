@@ -185,9 +185,6 @@ namespace GlobalProcess.Infrastructure.Migrations
                     b.Property<int?>("BusinessProcessInstanceId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CommentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CreatedByUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -197,18 +194,6 @@ namespace GlobalProcess.Infrastructure.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("DynamicFieldId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DynamicFormId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FieldPermissionsId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FieldValueId")
-                        .HasColumnType("int");
 
                     b.Property<string>("LastModifiedByUserId")
                         .IsRequired()
@@ -223,9 +208,6 @@ namespace GlobalProcess.Infrastructure.Migrations
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserGroupPermissionId")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -242,19 +224,7 @@ namespace GlobalProcess.Infrastructure.Migrations
 
                     b.HasIndex("BusinessProcessInstanceId");
 
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("DynamicFieldId");
-
-                    b.HasIndex("DynamicFormId");
-
-                    b.HasIndex("FieldPermissionsId");
-
-                    b.HasIndex("FieldValueId");
-
                     b.HasIndex("StepId");
-
-                    b.HasIndex("UserGroupPermissionId");
 
                     b.HasIndex("UserId");
 
@@ -278,12 +248,12 @@ namespace GlobalProcess.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DynamicFormId")
-                        .HasColumnType("int");
-
                     b.Property<string>("FieldType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FormId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsRequired")
                         .HasColumnType("bit");
@@ -309,7 +279,7 @@ namespace GlobalProcess.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DynamicFormId");
+                    b.HasIndex("FormId");
 
                     b.ToTable("DynamicFields");
                 });
@@ -479,6 +449,37 @@ namespace GlobalProcess.Infrastructure.Migrations
                     b.ToTable("Steps");
                 });
 
+            modelBuilder.Entity("GlobalProcess.Core.Models.UserGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserGroups");
+                });
+
             modelBuilder.Entity("GlobalProcess.Core.Models.UserGroupPermission", b =>
                 {
                     b.Property<int>("Id")
@@ -490,6 +491,12 @@ namespace GlobalProcess.Infrastructure.Migrations
                     b.Property<string>("Action")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CanEdit")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CanView")
+                        .HasColumnType("bit");
 
                     b.Property<string>("CreatedByUserId")
                         .IsRequired()
@@ -512,6 +519,9 @@ namespace GlobalProcess.Infrastructure.Migrations
                     b.Property<int>("StepId")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserGroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -519,6 +529,8 @@ namespace GlobalProcess.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("StepId");
+
+                    b.HasIndex("UserGroupId");
 
                     b.ToTable("UserGroupPermissions");
                 });
@@ -618,36 +630,12 @@ namespace GlobalProcess.Infrastructure.Migrations
                         .HasForeignKey("BusinessProcessId");
 
                     b.HasOne("GlobalProcess.Core.Models.BusinessProcessInstance", "BusinessProcessInstance")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("BusinessProcessInstanceId");
 
-                    b.HasOne("GlobalProcess.Core.Models.Comment", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("CommentId");
-
-                    b.HasOne("GlobalProcess.Core.Models.DynamicField", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("DynamicFieldId");
-
-                    b.HasOne("GlobalProcess.Core.Models.DynamicForm", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("DynamicFormId");
-
-                    b.HasOne("GlobalProcess.Core.Models.FieldPermissions", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("FieldPermissionsId");
-
-                    b.HasOne("GlobalProcess.Core.Models.FieldValue", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("FieldValueId");
-
                     b.HasOne("GlobalProcess.Core.Models.Step", "Step")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("StepId");
-
-                    b.HasOne("GlobalProcess.Core.Models.UserGroupPermission", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("UserGroupPermissionId");
 
                     b.HasOne("GlobalProcess.Core.Models.ApplicationUser", "User")
                         .WithMany()
@@ -670,9 +658,13 @@ namespace GlobalProcess.Infrastructure.Migrations
 
             modelBuilder.Entity("GlobalProcess.Core.Models.DynamicField", b =>
                 {
-                    b.HasOne("GlobalProcess.Core.Models.DynamicForm", null)
+                    b.HasOne("GlobalProcess.Core.Models.DynamicForm", "Form")
                         .WithMany("Fields")
-                        .HasForeignKey("DynamicFormId");
+                        .HasForeignKey("FormId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Form");
                 });
 
             modelBuilder.Entity("GlobalProcess.Core.Models.FieldPermissions", b =>
@@ -748,7 +740,15 @@ namespace GlobalProcess.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("GlobalProcess.Core.Models.UserGroup", "UserGroup")
+                        .WithMany("UserGroupPermissions")
+                        .HasForeignKey("UserGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Step");
+
+                    b.Navigation("UserGroup");
                 });
 
             modelBuilder.Entity("GlobalProcess.Core.Models.Workflow", b =>
@@ -778,50 +778,24 @@ namespace GlobalProcess.Infrastructure.Migrations
 
             modelBuilder.Entity("GlobalProcess.Core.Models.BusinessProcessInstance", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("FieldValues");
-                });
-
-            modelBuilder.Entity("GlobalProcess.Core.Models.Comment", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("GlobalProcess.Core.Models.DynamicField", b =>
-                {
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("GlobalProcess.Core.Models.DynamicForm", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Fields");
-                });
-
-            modelBuilder.Entity("GlobalProcess.Core.Models.FieldPermissions", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("GlobalProcess.Core.Models.FieldValue", b =>
-                {
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("GlobalProcess.Core.Models.Step", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("FieldPermissions");
 
                     b.Navigation("Permissions");
                 });
 
-            modelBuilder.Entity("GlobalProcess.Core.Models.UserGroupPermission", b =>
+            modelBuilder.Entity("GlobalProcess.Core.Models.UserGroup", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("UserGroupPermissions");
                 });
 
             modelBuilder.Entity("GlobalProcess.Core.Models.Workflow", b =>

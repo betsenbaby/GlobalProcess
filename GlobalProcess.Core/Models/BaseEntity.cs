@@ -10,8 +10,7 @@ namespace GlobalProcess.Core.Models
     {
         public int Id { get; set; }
         public string CreatedByUserId { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public DateTime CreatedDateTime { get; set; }     
         public DateTime LastModifiedDateTime { get; set; }
         public string LastModifiedByUserId { get; set; }
     }

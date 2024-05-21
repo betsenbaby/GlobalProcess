@@ -20,7 +20,9 @@ namespace GlobalProcess.Core.Models
         public ActionItem ParentActionItem { get; set; }
         public int Priority { get; set; }
         public DateTime Deadline { get; set; }
-        public ICollection<ActionItem> SubActionItems { get; set; }
+        public ICollection<ActionItem>? SubActionItems { get; set; }
+
+        public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
     }
 
     public enum ActionStatus

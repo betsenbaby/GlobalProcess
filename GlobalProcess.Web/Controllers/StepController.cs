@@ -1,6 +1,11 @@
 ﻿using GlobalProcess.Application.Services;
+using GlobalProcess.Application.ViewModels;
+using GlobalProcess.Core.Interfaces;
 using GlobalProcess.Core.Models;
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Serilog;
 using System;
 using System.Threading.Tasks;
@@ -10,51 +15,56 @@ namespace GlobalProcess.Web.Controllers
     public class StepController : Controller
     {
         private readonly StepService _stepService;
+        private readonly IRepository<StepType> _stepTypeRepository;
 
-        public StepController(StepService stepService)
+        public StepController(StepService stepService, IRepository<StepType> stepTypeRepository)
         {
             _stepService = stepService;
+            _stepTypeRepository = stepTypeRepository;
         }
 
-        public async Task<IActionResult> Index(int workflowId)
+        private async Task PopulateStepTypes()
         {
-            try
-            {
-                var steps = await _stepService.GetStepsByWorkflowIdAsync(workflowId);
-                ViewBag.WorkflowId = workflowId;
-                return View(steps);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, $"Error retrieving steps for workflow ID {workflowId}.");
-                return StatusCode(500, "Internal server error");
-            }
+            ViewBag.StepTypes = (await _stepTypeRepository.GetAllAsync())
+                .Select(st => new SelectListItem
+                {
+                    Text = st.Name,
+                    Value = st.Id.ToString()
+                }).ToList();
         }
 
-        public IActionResult Create(int workflowId)
+        public async Task<IActionResult> Create(int workflowId)
         {
+            await PopulateStepTypes();
             ViewBag.WorkflowId = workflowId;
-            return View();
+            return View(new StepViewModel { WorkflowId = workflowId });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Step step)
+        public async Task<IActionResult> Create(StepViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var step = model.Adapt<Step>();
+                    step.CreatedByUserId = User.Identity.Name;
+                    step.CreatedDateTime = DateTime.Now;
+                    step.LastModifiedByUserId = User.Identity.Name;
+                    step.LastModifiedDateTime = DateTime.Now;
+
                     await _stepService.AddStepAsync(step);
-                    return RedirectToAction(nameof(Index), new { workflowId = step.WorkflowId });
+                    return RedirectToAction(nameof(Index), new { workflowId = model.WorkflowId });
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, $"Error creating step for workflow ID {step.WorkflowId}.");
+                    Log.Error(ex, $"Error creating step for workflow ID {model.WorkflowId}.");
                     return StatusCode(500, "Internal server error");
                 }
             }
-            ViewBag.WorkflowId = step.WorkflowId;
-            return View(step);
+            await PopulateStepTypes();
+            ViewBag.WorkflowId = model.WorkflowId;
+            return View(model);
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -66,7 +76,8 @@ namespace GlobalProcess.Web.Controllers
                 {
                     return NotFound();
                 }
-                return View(step);
+                await PopulateStepTypes();
+                return View(step.Adapt<StepViewModel>());
             }
             catch (Exception ex)
             {
@@ -76,22 +87,26 @@ namespace GlobalProcess.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Step step)
+        public async Task<IActionResult> Edit(StepViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var step = model.Adapt<Step>();
+                    step.LastModifiedByUserId = User.Identity.Name;
+                    step.LastModifiedDateTime = DateTime.Now;
                     await _stepService.UpdateStepAsync(step);
                     return RedirectToAction(nameof(Index), new { workflowId = step.WorkflowId });
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, $"Error updating step with ID {step.Id}.");
+                    Log.Error(ex, $"Error updating step with ID {model.Id}.");
                     return StatusCode(500, "Internal server error");
                 }
             }
-            return View(step);
+            await PopulateStepTypes();
+            return View(model);
         }
 
         public async Task<IActionResult> Delete(int id)

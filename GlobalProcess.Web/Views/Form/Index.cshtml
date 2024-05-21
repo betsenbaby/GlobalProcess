@@ -1,25 +1,29 @@
 ﻿@model IEnumerable<GlobalProcess.Core.Models.DynamicForm>
 
 <h1>Forms</h1>
-<a href="@Url.Action("Create", "Form")">Create New Form</a>
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>
-                    <a href="@Url.Action("Edit", "Form", new { id = item.Id })">Edit</a> |
-                    <a href="@Url.Action("Delete", "Form", new { id = item.Id })">Delete</a> |
-                    <a href="@Url.Action("AddField", "Form", new { formId = item.Id })">Add Fields</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<a href="@Url.Action("Create", "Form")" class="btn btn-primary mb-3">Create New Form</a>
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Form", new { id = item.Id })" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="@Url.Action("Delete", "Form", new { id = item.Id })" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="@Url.Action("AddField", "Form", new { formId = item.Id })" class="btn btn-success btn-sm">Add Fields</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
